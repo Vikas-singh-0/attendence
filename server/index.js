@@ -8,64 +8,64 @@ const jsonwebtoken = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const AttendenceSchema = require("./Models/AttendenceSchema");
 
-const requresLogin =  expressJwt.expressjwt({
+const requresLogin = expressJwt.expressjwt({
   secret: "test",
   algorithms: ["HS256"],
-})
+});
 
 app.use(cors());
 app.use(express.json());
 
 // expressJwt.expressjwt
-const isPremanent =async (req,res,next)=>{
-  const user = await Employee.findById(req.auth.id).select('-password')
-  if(user.premanent){
+const isPremanent = async (req, res, next) => {
+  const user = await Employee.findById(req.auth.id).select("-password");
+  if (user.premanent) {
     req.user = user;
-    return next()
+    return next();
   }
   return res.status(401).json({
-    message:"you are not permanent employee,Please login to the temp user page"
-  })
-}
+    message:
+      "you are not permanent employee,Please login to the temp user page",
+  });
+};
 
-app.get(
-  "/",
-  requresLogin,
-  async (req, res, next) => {
-    console.log(JSON.stringify(req.auth));
-    res.json({ success: true , user:req.auth});
-  }
-);
+app.get("/", requresLogin, async (req, res, next) => {
+  console.log(JSON.stringify(req.auth));
+  res.json({ success: true, user: req.auth });
+});
 
-app.get('/api/employee/details',requresLogin,async (req,res,next)=>{
+app.get("/api/employee/details", requresLogin, async (req, res, next) => {
   try {
-      const userDetails = await Employee.findById(req.auth.id)
-      if(userDetails){
-        return res.json({
-          userDetails
-        })
-      }else{
-        return res.json({message:"User does not exist"})
-      }
+    const userDetails = await Employee.findById(req.auth.id);
+    if (userDetails) {
+      return res.json({
+        userDetails,
+      });
+    } else {
+      return res.json({ message: "User does not exist" });
+    }
   } catch (error) {
-    return res.json({message:"error occured"})
+    return res.json({ message: "error occured" });
   }
-})
+});
 
 //attendence routes
-app.post('/api/attendence/markAttendence',requresLogin,async(req,res,next)=>{
-  const employee = await Employee.findById(req.auth.id)
-  console.log(employee);
-  if(employee){
-    const todayAttendence = await AttendenceSchema.create(req.body)
-    await employee.attendence.push(todayAttendence)
-    await employee.save()
-    return res.json({message:"marked attendence for today"})
-  }else{
-    return res.json({message:"user does not exist"})
+app.post(
+  "/api/attendence/markAttendence",
+  requresLogin,
+  async (req, res, next) => {
+    const employee = await Employee.findById(req.auth.id);
+    console.log(employee);
+    if (employee) {
+      const todayAttendence = await AttendenceSchema.create(req.body);
+      await employee.attendence.push(todayAttendence);
+      await employee.save();
+      return res.json({ message: "marked attendence for today" });
+    } else {
+      return res.json({ message: "user does not exist" });
+    }
   }
-})
-
+);
 
 //employee register routes
 app.post("/api/employee/register", async (req, res) => {
@@ -91,6 +91,7 @@ app.post("/api/employee/register", async (req, res) => {
 //employee login route
 app.post("/api/employee/login", async (req, res) => {
   try {
+    console.log("body",req.body);
     const employee = await Employee.findOne({ email: req.body.email });
     if (employee) {
       employee.comparePassword(req.body.password, (err, match) => {

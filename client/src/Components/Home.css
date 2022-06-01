@@ -1,0 +1,47 @@
+.home {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgb(0, 1, 2);
+  text-align: center;
+}
+
+.container {
+  height: 100%;
+}
+
+.heading-top {
+  position: relative;
+  top: 20%;
+  color: aliceblue;
+  font-family: cursive;
+}
+.redirect-links {
+  position: absolute;
+  top: 40%;
+  margin: auto;
+  width: 80%;
+}
+.btns {
+  height: 5rem;
+  margin: 5%;
+  width: 8rem;
+  color: aliceblue;
+
+  font-size: x-large;
+  background: black;
+  border: 2px solid white;
+}
+.btns:hover{
+        animation: blink 2s infinite;
+}
+@keyframes blink {
+        from {
+                background-color: black;
+                transform: scale(1);
+        }
+        to{
+                background-color: rgba(255, 255, 255, 0.3);
+                transform: scale(1.3);
+        }
+}
