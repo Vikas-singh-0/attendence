@@ -8,6 +8,7 @@ import TLogin from './Login/TLogin';
 import PLogin from './Login/PLogin';
 import Register from './Register/Register';
 import Dashboard from './Dashboard/Dashboard';
+import Salary from './Salary/Salary';
 // import {Register} from './Register/Register';
 
 
@@ -19,6 +20,7 @@ function App() {
      <Route path='/login-for-permanent' element={<PLogin/>}/>
      <Route path='/register' element={<Register/>}/>
      <Route path='/dashboard' element={<Dashboard/>}/>
+     <Route path='/dashboard/salary' element={<Salary/>}/>
    </Routes>
   );
 }

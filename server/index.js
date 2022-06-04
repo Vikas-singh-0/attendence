@@ -50,6 +50,13 @@ app.get("/api/employee/details", requresLogin, async (req, res, next) => {
 });
 
 //attendence routes
+
+app.get('/api/attendence/CheckAttendence/:year/:month/:date',requresLogin,async (req,res)=>{
+  const att= await AttendenceSchema.findOne({Employee:req.auth.id,Month:req.params.month,Datee:req.params.date,Year:req.params.year})
+  if(att)return res.json({att})
+  return res.json({})
+})
+
 app.post(
   "/api/attendence/markAttendence",
   requresLogin,
@@ -57,10 +64,10 @@ app.post(
     const employee = await Employee.findById(req.auth.id);
     console.log(employee);
     if (employee) {
-      const todayAttendence = await AttendenceSchema.create(req.body);
+      const todayAttendence = await AttendenceSchema.create({...req.body,Employee:req.auth.id});
       await employee.attendence.push(todayAttendence);
       await employee.save();
-      return res.json({ message: "marked attendence for today" });
+      return res.json({ message: "marked attendence for today",success:true });
     } else {
       return res.json({ message: "user does not exist" });
     }

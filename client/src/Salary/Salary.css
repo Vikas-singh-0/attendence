@@ -1,0 +1,18 @@
+h1{
+        background-color: black;
+        color: blanchedalmond;
+        height:auto;
+}
+.form{
+        background: rgba(21, 6, 6, 0.147);
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+}
+#year,#month{
+        padding: 5px;
+        margin: 2px;
+        border-radius: 10px;
+}

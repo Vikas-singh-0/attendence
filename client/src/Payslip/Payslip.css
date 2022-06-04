@@ -1,0 +1,15 @@
+.pdf{
+        width: 80%;
+        margin: auto;
+        margin-top: 21px;
+}
+.heading{
+        display: flex;
+        justify-content: space-between;
+}
+.left{
+        width: 60%;
+}
+.right{
+        width: auto;
+}
